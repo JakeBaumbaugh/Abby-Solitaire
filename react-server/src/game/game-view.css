@@ -34,11 +34,12 @@
 .deck {
     display: inline-block;
     margin: 0 auto;
-    padding: 1rem 3rem;
-    border: solid 2px black;
-    border-radius: 4px;
     cursor: pointer;
-    user-select: none;
     background-color: cornflowerblue;
     font-weight: 600;
+}
+
+.deck.empty {
+    background-color: #0000;
+    border-color: #222;
 }

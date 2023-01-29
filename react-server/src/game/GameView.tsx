@@ -79,7 +79,7 @@ export default function GameView() {
             ))}
         </div>
         <div>
-            <div className="deck" onClick={() => handleDeckClick()}>DECK</div>
+            <div className={game.deck.cards.length === 0 ? "deck empty card" : "deck card"} onClick={() => handleDeckClick()}/>
         </div>
     </>
 }
