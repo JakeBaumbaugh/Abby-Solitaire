@@ -29,3 +29,10 @@ export function getDeck(faceup: boolean, shuffled = true) {
     // Create CardStack
     return {cards, faceup};
 }
+
+export const getTopCard = (stack: CardStack): Card|undefined => stack.cards.at(-1);
+
+export const combineStacks = (stackBottom: CardStack, stackTop: CardStack): CardStack => ({
+    cards: [...stackBottom.cards, ...stackTop.cards],
+    faceup: stackTop.faceup
+});

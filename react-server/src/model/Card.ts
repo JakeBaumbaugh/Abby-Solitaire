@@ -25,3 +25,7 @@ export function numberToText(number: number): string {
             return `${number}`;
     }
 }
+
+export function validCardMatch(card1: Card, card2: Card): boolean {
+    return card1.suit === card2.suit || card1.number === card2.number;
+}
