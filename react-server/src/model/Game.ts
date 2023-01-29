@@ -5,7 +5,7 @@ export default interface Game {
     deck: CardStack;
 }
 
-export const newGame = () => ({
+export const newGame = (): Game => ({
     board: [],
     deck: getDeck(false),
 });
