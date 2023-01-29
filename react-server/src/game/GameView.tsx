@@ -6,6 +6,9 @@ import "./game-view.css";
 
 export default function GameView() {
     const [game, setGame] = useState(newGame());
+    const [selectedIndex, setSelectedIndex] = useState(-1);
+
+    const handleCardClick = (index: number) => setSelectedIndex(prevSelected => prevSelected === index ? -1 : index);
 
     const handleDeckClick = () => setGame(game => {
         if(game.deck.cards.length === 0) {
@@ -23,10 +26,23 @@ export default function GameView() {
         return {board: [...game.board, newStack], deck: newDeck};
     });
 
+    const getCssClass = (index: number) => {
+        switch(selectedIndex - index) {
+            case 0:
+                return "card selected";
+            case 1: case 3:
+                return "card destination";
+            default:
+                return "card";
+        }
+    }
+
     return <>
         <div className="game-board">
             {game.board.map((stack, i) => (
-                <div className="card" key={i}>{getCardText(stack.cards.at(-1) as Card)}</div>
+                <div className={getCssClass(i)} onClick={() => handleCardClick(i)} key={i}>
+                    {getCardText(stack.cards.at(-1) as Card)}
+                </div>
             ))}
         </div>
         <div>

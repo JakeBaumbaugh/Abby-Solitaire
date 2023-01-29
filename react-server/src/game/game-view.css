@@ -23,6 +23,14 @@
     background-color: white;
 }
 
+.card.selected {
+    box-shadow: 0 2px 8px 4px yellow;
+}
+
+.card.destination {
+    box-shadow: 0 0 2px 2px red;
+}
+
 .deck {
     display: inline-block;
     margin: 0 auto;
