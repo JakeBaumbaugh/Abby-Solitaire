@@ -1,7 +1,8 @@
 import { useState } from "react"
 import Card, { getCardText } from "../model/Card";
 import CardStack from "../model/CardStack";
-import { newGame } from "../model/Game"
+import { newGame } from "../model/Game";
+import "./game-view.css";
 
 export default function GameView() {
     const [game, setGame] = useState(newGame());
@@ -23,13 +24,13 @@ export default function GameView() {
     });
 
     return <>
-        <div>
+        <div className="game-board">
             {game.board.map((stack, i) => (
-                <div key={i}>{getCardText(stack.cards.at(-1) as Card)}</div>
+                <div className="card" key={i}>{getCardText(stack.cards.at(-1) as Card)}</div>
             ))}
         </div>
         <div>
-            <div onClick={() => handleDeckClick()}>DECK</div>
+            <div className="deck" onClick={() => handleDeckClick()}>DECK</div>
         </div>
     </>
 }

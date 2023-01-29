@@ -1,0 +1,36 @@
+.App {
+    background-color: green;
+    width: 100vw;
+    height: 100vh;
+}
+
+.game-board {
+    padding: 4rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 5rem;
+    height: 7rem;
+    border: solid 2px black;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    background-color: white;
+}
+
+.deck {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 1rem 3rem;
+    border: solid 2px black;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    background-color: cornflowerblue;
+    font-weight: 600;
+}
