@@ -5,6 +5,7 @@ import { newGame } from "../model/Game";
 import "./game-view.css";
 import { validCardMatch } from '../model/Card';
 import { getTopCard } from '../model/CardStack';
+import CardDisplay from "./CardDisplay";
 
 export default function GameView() {
     const [game, setGame] = useState(newGame());
@@ -73,13 +74,21 @@ export default function GameView() {
     return <>
         <div className="game-board">
             {game.board.map((stack, i) => (
-                <div className={getCssClass(i)} onClick={() => handleCardClick(i)} key={i}>
-                    {getCardText(stack.cards.at(-1) as Card)}
-                </div>
+                <CardDisplay
+                    card={stack.cards.at(-1) as Card}
+                    faceup={true}
+                    className={getCssClass(i)}
+                    onClick={() => handleCardClick(i)}
+                    key={i}
+                />
             ))}
         </div>
         <div>
-            <div className={game.deck.cards.length === 0 ? "deck empty card" : "deck card"} onClick={() => handleDeckClick()}/>
+            <CardDisplay
+                faceup={false}
+                className={game.deck.cards.length === 0 ? "deck empty card" : "deck card"}
+                onClick={() => handleDeckClick()}
+            />
         </div>
     </>
 }
