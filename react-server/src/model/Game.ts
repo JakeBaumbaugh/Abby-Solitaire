@@ -26,7 +26,7 @@ export default class Game {
         }
         const targetStack = this.board[targetIndex];
         const destinationStack = this.board[destinationIndex];
-        if((targetStack.getTopCard() as Card).matches(destinationStack.getTopCard() as Card)) {
+        if(targetStack.matches(destinationStack)) {
             const newBoard = [
                 ...this.board.slice(0, destinationIndex),
                 targetStack.stackAbove(destinationStack),
@@ -37,5 +37,17 @@ export default class Game {
         } else {
             return new Game(this.board, this.deck);
         }
+    }
+
+    hasValidMoves(): boolean {
+        if(this.deck.cards.length > 0) {
+            // Deck still has cards
+            return true;
+        }
+        return this.board.some((stack: CardStack, index: number) => (
+            index+1 < this.board.length && stack.matches(this.board[index+1])
+        ) || (
+            index+3 < this.board.length && stack.matches(this.board[index+3])
+        ));
     }
 }

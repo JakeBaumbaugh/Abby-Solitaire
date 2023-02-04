@@ -42,3 +42,36 @@
 .deck.empty {
     opacity: 0.4;
 }
+
+.game-over {
+    position: fixed;
+    top: 33vh;
+    bottom: 33vh;
+    left: 35vw;
+    right: 35vw;
+    background-Color: #EEEE;
+    border-radius: 2rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 36pt;
+    font-weight: 600;
+
+    transform: none;
+    opacity: 1;
+    transition: all 0.7s;
+}
+
+.game-over.hidden {
+    visibility: hidden;
+    transform: translateY(-1rem);
+    opacity: 0;
+}
+
+.game-over button {
+    font-size: 18pt;
+    padding: 8px;
+
+}

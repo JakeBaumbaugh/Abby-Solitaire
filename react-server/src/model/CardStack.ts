@@ -20,6 +20,13 @@ export default class CardStack {
     stackUnder(stack: CardStack): CardStack {
         return new CardStack([...this.cards, ...stack.cards], stack.faceup);
     }
+
+    matches(stack: CardStack): boolean {
+        if(this.cards.length === 0 || stack.cards.length === 0) {
+            return false;
+        }
+        return this.getTopCard()!.matches(stack.getTopCard()!);
+    }
 }
 
 export function getDeck(faceup: boolean, shuffled = true): CardStack {
