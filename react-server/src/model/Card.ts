@@ -1,17 +1,27 @@
 export type Suit = "heart" | "diamond" | "spade" | "club";
 
-export default interface Card {
-    suit: Suit;
-    number: number;
+export default class Card {
+    readonly suit: Suit;
+    readonly number: number;
+
+    constructor(suit: Suit, number: number) {
+        this.suit = suit;
+        this.number = number;
+    }
+
+    getCardText(): string {
+        const face = numberToText(this.number);
+        const suit = `${this.suit.charAt(0).toUpperCase()}${this.suit.slice(1)}`;
+        return `${face} of ${suit}s`;
+    }
+
+    matches(card: Card): boolean {
+        return this.suit === card.suit || this.number === card.number;
+    }
+    
 }
 
-export function getCardText(card: Card): string {
-    const face = numberToText(card.number);
-    const suit = `${card.suit.charAt(0).toUpperCase()}${card.suit.slice(1)}`;
-    return `${face} of ${suit}s`;
-}
-
-export function numberToText(number: number): string {
+function numberToText(number: number): string {
     switch(number) {
         case 1:
             return "Ace";
@@ -24,8 +34,4 @@ export function numberToText(number: number): string {
         default:
             return `${number}`;
     }
-}
-
-export function validCardMatch(card1: Card, card2: Card): boolean {
-    return card1.suit === card2.suit || card1.number === card2.number;
 }

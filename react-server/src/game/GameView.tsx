@@ -1,34 +1,20 @@
 import { useState } from "react"
-import Card, { getCardText } from "../model/Card";
-import CardStack, { combineStacks } from "../model/CardStack";
-import { newGame } from "../model/Game";
+import Card from "../model/Card";
+import Game from "../model/Game";
 import "./game-view.css";
-import { validCardMatch } from '../model/Card';
-import { getTopCard } from '../model/CardStack';
 import CardDisplay from "./CardDisplay";
 
 export default function GameView() {
-    const [game, setGame] = useState(newGame());
+    const [game, setGame] = useState(new Game());
     const [selectedIndex, setSelectedIndex] = useState(-1);
 
-    const handleDeckClick = () => setGame(game => {
+    const handleDeckClick = () => {
         setSelectedIndex(-1);
-        if(game.deck.cards.length === 0) {
-            return game;
-        }
-        const card = game.deck.cards.at(-1) as Card;
-        const newStack: CardStack = {
-            cards: [card],
-            faceup: true
-        };
-        const newDeck: CardStack = {
-            cards: game.deck.cards.slice(0, -1),
-            faceup: false
-        }
-        return {board: [...game.board, newStack], deck: newDeck};
-    });
+        setGame(game => game.dealCard());
+    };
 
     const handleCardClick = (index: number) => {
+        // This switch could be entirely handled by the logic in setGame, but prevents re-render
         switch(selectedIndex - index) {
             case 0:
                 // Deselect stack
@@ -37,21 +23,15 @@ export default function GameView() {
             case 1: case 3:
                 // Move selected stack to current stack
                 setGame(game => {
-                    const selectedStack = game.board[selectedIndex];
-                    const destinationStack = game.board[index];
-                    if(validCardMatch(getTopCard(selectedStack) as Card, getTopCard(destinationStack) as Card)) {
-                        const newBoard = [
-                            ...game.board.slice(0, index),
-                            combineStacks(destinationStack, selectedStack),
-                            ...game.board.slice(index+1, selectedIndex),
-                            ...game.board.slice(selectedIndex+1)
-                        ];
-                        setSelectedIndex(-1);
-                        return {board: newBoard, deck: game.deck};
-                    } else {
+                    const newGame = game.moveStack(selectedIndex, index);
+                    if(newGame.board.length === game.board.length) {
+                        // Board length did not change, invalid move. Select new pile.
                         setSelectedIndex(index);
-                        return game;
+                    } else {
+                        // Move succeeded. Deselect.
+                        setSelectedIndex(-1);
                     }
+                    return newGame;
                 });
                 break;
             default:
